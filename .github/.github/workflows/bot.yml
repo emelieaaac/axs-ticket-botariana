@@ -17,8 +17,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install requests
-        run: pip install requests
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install chromium
 
       - name: Run check
         run: python check.py
