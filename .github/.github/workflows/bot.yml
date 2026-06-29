@@ -20,5 +20,8 @@ jobs:
       - name: Install requests
         run: pip install requests
 
-      - name: Run check
-        run: python check.py
+- name: Run test
+  run: python test.py
+
+- name: Run check
+  run: python check.py
