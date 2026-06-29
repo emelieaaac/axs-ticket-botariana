@@ -28,3 +28,7 @@ jobs:
 
       - name: Run script
         run: python check.py
+
+      - name: Debug install
+  run: |
+    python -c "import playwright; print('PLAYWRIGHT OK')"
