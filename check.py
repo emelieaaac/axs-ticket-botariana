@@ -1,11 +1,28 @@
-import requests
+from playwright.sync_api import sync_playwright
 
-url = "https://www.axs.com/events/1141607/ariana-grande-extra-date-added-tickets"
+URL = "https://www.axs.com/events/1141607/ariana-grande-extra-date-added-tickets"
 
-r = requests.get(url)
-text = r.text.lower()
+def run():
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
 
-if "choose from the map" in text or "find tickets" in text:
-    print("TICKETS MOGELIJK")
-else:
-    print("no tickets")
+        page.goto(URL, wait_until="networkidle")
+        content = page.content().lower()
+
+        signals = [
+            "choose from the map",
+            "pick your tickets",
+            "buy tickets",
+            "select seats",
+            "find tickets"
+        ]
+
+        if any(s in content for s in signals):
+            print("🚨 TICKETS MOGELIJK")
+        else:
+            print("no tickets")
+
+        browser.close()
+
+run()
